@@ -63,7 +63,13 @@ public class CadastroAlunoJanela extends javax.swing.JFrame {
         tfNome = new javax.swing.JTextField();
         btSalvar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbAlunos = new javax.swing.JTable();
+        tbAlunos = new javax.swing.JTable(){
+            private static final long serialVersionUID = 1L;
+
+            public boolean isCellEditable(int row, int column){
+                return false;
+            };
+        };
         btEditar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -132,6 +138,11 @@ public class CadastroAlunoJanela extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tbAlunos);
 
         btEditar.setText("Editar");
+        btEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btEditarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -168,14 +179,50 @@ public class CadastroAlunoJanela extends javax.swing.JFrame {
         String ra = tfRa.getText();
         String nome = tfNome.getText();
         
-        //Adiciona os dados na tabela
-        modelo.addRow(new Object[]{ra, nome});
+        if(linhaSelecionada >= 0){
+            //remove a linha selecionanda
+            modelo.removeRow(linhaSelecionada);
+            //Adiciona dados na linha selecionada
+            modelo.insertRow(linhaSelecionada, new Object[]{ra, nome});
+        }else{
+            //Adiciona os dados na tabela
+            modelo.addRow(new Object[]{ra, nome});
+        }
+       
         
-        JOptionPane.showMessageDialog(this, "Aluno Cadastrado com Sucesso!");
+        JOptionPane.showMessageDialog(this, 
+                "Aluno Cadastrado com Sucesso!");
         tfRa.setText("");
         tfNome.setText("");
         
     }//GEN-LAST:event_btSalvarActionPerformed
+
+    private void btEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditarActionPerformed
+        
+        linhaSelecionada = -1;
+        
+        //retorna a linha selecionada
+        linhaSelecionada = tbAlunos.getSelectedRow();
+        
+        if(linhaSelecionada >= 0){
+            //retornar os valores da linha selecionda
+            String ra = (String) tbAlunos
+                    .getValueAt(linhaSelecionada, 0);
+            
+            String nome = (String) tbAlunos
+                    .getValueAt(linhaSelecionada, 1);
+            
+            tfRa.setText(ra);
+            tfNome.setText(nome);
+        }else{
+            JOptionPane
+                    .showMessageDialog(this, 
+                            "Selecione um registro na tabela", 
+                            "Atenção", 
+                            JOptionPane.WARNING_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_btEditarActionPerformed
 
     
 

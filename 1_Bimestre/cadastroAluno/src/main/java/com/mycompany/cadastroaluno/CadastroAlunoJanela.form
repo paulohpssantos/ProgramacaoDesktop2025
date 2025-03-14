@@ -150,6 +150,9 @@
               </Table>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTable(){&#xa;    private static final long serialVersionUID = 1L;&#xa;&#xa;    public boolean isCellEditable(int row, int column){&#xa;        return false;&#xa;    };&#xa;}"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
@@ -157,6 +160,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Editar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btEditarActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
