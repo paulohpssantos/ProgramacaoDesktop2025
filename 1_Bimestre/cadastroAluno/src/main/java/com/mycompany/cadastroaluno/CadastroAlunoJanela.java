@@ -184,6 +184,8 @@ public class CadastroAlunoJanela extends javax.swing.JFrame {
             modelo.removeRow(linhaSelecionada);
             //Adiciona dados na linha selecionada
             modelo.insertRow(linhaSelecionada, new Object[]{ra, nome});
+            
+            linhaSelecionada = -1;
         }else{
             //Adiciona os dados na tabela
             modelo.addRow(new Object[]{ra, nome});
