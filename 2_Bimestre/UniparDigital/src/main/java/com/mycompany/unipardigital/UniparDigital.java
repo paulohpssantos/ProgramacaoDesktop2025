@@ -4,6 +4,8 @@
 
 package com.mycompany.unipardigital;
 
+import dao.AlunoDAO;
+
 /**
  *
  * @author paulodossantos
@@ -12,5 +14,7 @@ public class UniparDigital {
 
     public static void main(String[] args) {
         System.out.println("Hello World!");
+        
+        
     }
 }
