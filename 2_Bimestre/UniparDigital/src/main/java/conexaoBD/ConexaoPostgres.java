@@ -62,3 +62,20 @@ public class ConexaoPostgres {
     }
     
 }
+
+//-- Table: public.Aluno
+//
+//-- DROP TABLE IF EXISTS public."Aluno";
+//
+//CREATE TABLE IF NOT EXISTS public."Aluno"
+//(
+//    "RA_ALUNO" integer NOT NULL,
+//    "NOME_ALUNO" character varying(255) COLLATE pg_catalog."default" NOT NULL,
+//    "DT_NASC_ALUNO" character varying(10) COLLATE pg_catalog."default" NOT NULL,
+//    CONSTRAINT "Aluno_pkey" PRIMARY KEY ("RA_ALUNO")
+//)
+//
+//TABLESPACE pg_default;
+//
+//ALTER TABLE IF EXISTS public."Aluno"
+//    OWNER to postgres;
