@@ -33,7 +33,6 @@ public abstract class GenericDAO<Objeto> {
     
     public ArrayList<Objeto> retornarLista(String sql){
         
-        
         PreparedStatement ps;
         ResultSet rs;
         ArrayList<Objeto> lista = new ArrayList<>();
