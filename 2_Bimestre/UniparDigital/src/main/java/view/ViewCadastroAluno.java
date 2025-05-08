@@ -4,17 +4,73 @@
  */
 package view;
 
+import dao.AlunoDAO;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.Aluno;
+
 /**
  *
  * @author paulodossantos
  */
 public class ViewCadastroAluno extends javax.swing.JFrame {
-
+    
+    private AlunoDAO alunoDao;
+    private ArrayList<Aluno> listaAlunos;
     /**
      * Creates new form ViewCadastroAluno
      */
     public ViewCadastroAluno() {
         initComponents();
+        
+        alunoDao = new AlunoDAO();
+        atualizaGrid();
+        
+    }
+    
+    public void atualizaGrid(){
+        try{
+            
+            //Retornando dados da tabela
+            String sql = "SELECT * FROM public.\"Aluno\" Order by \"RA_ALUNO\";";
+            listaAlunos = new ArrayList<>();
+            listaAlunos = alunoDao.retornarLista(sql);
+            
+            //Limpar a tabela
+            tbAlunos.removeAll();
+            
+            //Criar as colunas
+            DefaultTableModel tableModel = 
+                    new DefaultTableModel(new Object[][]{},
+                    new String[]{"RA", "Nome", "Dt. Nascimento"}){
+                
+                //Adicionado para não deixar alterar as células da tabela        
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false; 
+                }
+            };
+            
+            //setar as colunas na tabela
+            tbAlunos.setModel(tableModel);
+            
+            //Adicionar os dados na tabela
+            DefaultTableModel dm = (DefaultTableModel) tbAlunos.getModel();
+            for (Aluno aluno : listaAlunos) {
+                
+                dm.addRow(new Object[]{aluno.getRaAluno(), 
+                    aluno.getNomeAluno(), aluno.getDtNascAluno()});
+                
+                
+            }
+            
+            
+            
+            
+        }catch(Exception ex){
+            
+        }
     }
 
     /**
@@ -91,6 +147,11 @@ public class ViewCadastroAluno extends javax.swing.JFrame {
         btAtualizar.setText("Atualizar");
 
         btSalvar.setText("Salvar");
+        btSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSalvarActionPerformed(evt);
+            }
+        });
 
         btPesquisar.setText("Pesquisar");
         btPesquisar.addActionListener(new java.awt.event.ActionListener() {
@@ -130,9 +191,7 @@ public class ViewCadastroAluno extends javax.swing.JFrame {
                                             .addComponent(jLabel3))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                                .addComponent(jLabel4)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                            .addComponent(jLabel4)
                                             .addComponent(tfDtNasc)))
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -247,6 +306,30 @@ public class ViewCadastroAluno extends javax.swing.JFrame {
     private void btPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btPesquisarActionPerformed
+
+    private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
+        
+        Aluno novoAluno = new Aluno();
+        novoAluno.setRaAluno(Integer.parseInt(tfRA.getText()));
+        novoAluno.setNomeAluno(tfNome.getText());
+        novoAluno.setDtNascAluno(tfDtNasc.getText());
+        
+        //Salvando aluno no banco
+        if(alunoDao.salvar(novoAluno)){
+            JOptionPane.showMessageDialog(this, 
+                    "Aluno salvo com sucesso!",
+                    "Sucesso",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            JOptionPane.showMessageDialog(this, 
+                    "Erro ao salvar Aluno, solicite suporte técnico.",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+         
+        atualizaGrid();
+        
+    }//GEN-LAST:event_btSalvarActionPerformed
 
     
 
