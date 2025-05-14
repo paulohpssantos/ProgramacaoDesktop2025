@@ -5,10 +5,14 @@
 package view;
 
 import dao.AlunoDAO;
+import dto.EnderecoDTO;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Aluno;
+import service.EnderecoService;
 
 /**
  *
@@ -129,6 +133,11 @@ public class ViewCadastroAluno extends javax.swing.JFrame {
         tfCep.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfCepActionPerformed(evt);
+            }
+        });
+        tfCep.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tfCepKeyPressed(evt);
             }
         });
 
@@ -330,6 +339,27 @@ public class ViewCadastroAluno extends javax.swing.JFrame {
         atualizaGrid();
         
     }//GEN-LAST:event_btSalvarActionPerformed
+
+    private void tfCepKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfCepKeyPressed
+        
+        //determina qual tecla clicar para executar o método
+        if(evt.getKeyCode() == evt.VK_ENTER){
+            if(!tfCep.getText().equals("")){
+                try {
+                    EnderecoDTO endereco =
+                            EnderecoService.buscaEndereco(tfCep.getText());
+                    
+                    tfLogradouro.setText(endereco.getLogradouro());
+                    tfBairro.setText(endereco.getBairro());
+                    tfCidade.setText(endereco.getLocalidade());
+                    tfUF.setText(endereco.getUf());
+                    
+                } catch (Exception ex) {
+                    Logger.getLogger(ViewCadastroAluno.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }//GEN-LAST:event_tfCepKeyPressed
 
     
 
