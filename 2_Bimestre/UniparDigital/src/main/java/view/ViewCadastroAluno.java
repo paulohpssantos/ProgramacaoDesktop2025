@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import model.Aluno;
 import service.EnderecoService;
@@ -22,6 +24,7 @@ public class ViewCadastroAluno extends javax.swing.JFrame {
     
     private AlunoDAO alunoDao;
     private ArrayList<Aluno> listaAlunos;
+    private boolean alunoSelecionado;
     /**
      * Creates new form ViewCadastroAluno
      */
@@ -66,15 +69,44 @@ public class ViewCadastroAluno extends javax.swing.JFrame {
                 dm.addRow(new Object[]{aluno.getRaAluno(), 
                     aluno.getNomeAluno(), aluno.getDtNascAluno()});
                 
-                
             }
             
-            
-            
-            
+            //selecionar um aluno na tabela
+            tbAlunos.getSelectionModel()
+                    .addListSelectionListener(new ListSelectionListener() {
+                @Override
+                public void valueChanged(ListSelectionEvent e) {
+                    //Testar se selecionou algum aluno na grid
+                    int linhaSelecionada = tbAlunos.getSelectedRow();
+                    if(linhaSelecionada != -1){
+                        mostrarDadosAluno(listaAlunos.get(linhaSelecionada));
+                    }
+                }
+            });
+
         }catch(Exception ex){
             
         }
+    }
+    
+    private void mostrarDadosAluno(Aluno aluno){
+        
+        tfRA.setText(String.valueOf(aluno.getRaAluno()));
+        tfNome.setText(aluno.getNomeAluno());
+        tfDtNasc.setText(aluno.getDtNascAluno());
+        btSalvar.setEnabled(false);
+        alunoSelecionado = true;
+        tfRA.setEditable(false);
+        
+    }
+    
+    private void limparCampos(){
+        tfRA.setText("");
+        tfNome.setText("");
+        tfDtNasc.setText("");
+        btSalvar.setEnabled(true);
+        tfRA.setEditable(true);
+        alunoSelecionado = false;
     }
 
     /**
@@ -154,6 +186,11 @@ public class ViewCadastroAluno extends javax.swing.JFrame {
         btRemover.setText("Remover");
 
         btAtualizar.setText("Atualizar");
+        btAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAtualizarActionPerformed(evt);
+            }
+        });
 
         btSalvar.setText("Salvar");
         btSalvar.addActionListener(new java.awt.event.ActionListener() {
@@ -360,6 +397,35 @@ public class ViewCadastroAluno extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_tfCepKeyPressed
+
+    private void btAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizarActionPerformed
+        
+        if(alunoSelecionado){
+            Aluno aluno = new Aluno();
+            aluno.setRaAluno(Integer.parseInt(tfRA.getText()));
+            aluno.setNomeAluno(tfNome.getText());
+            aluno.setDtNascAluno(tfDtNasc.getText());
+            
+            if(alunoDao.atualizar(aluno)){
+                JOptionPane.showMessageDialog(this, "Aluno atualizado com sucesso!!");
+                
+                limparCampos();
+                atualizaGrid();
+                
+            }else{
+                JOptionPane.showMessageDialog(this, 
+                        "Erro ao atualizar o aluno, Solicite suporte técnico.", 
+                        "Erro",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, 
+                        "Selecione um aluno para atualizar.", 
+                        "Atenção",
+                        JOptionPane.WARNING_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_btAtualizarActionPerformed
 
     
 
