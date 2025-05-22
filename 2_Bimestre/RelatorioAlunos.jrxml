@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.21.3.final using JasperReports Library version 6.21.3-4a3078d20785ebe464f18037d738d12fc98c13cf  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioAlunos" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="efb525f5-68a4-4193-a0ba-effa9ee7ffcb">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="RelatorioAluno"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT "RA_ALUNO",
+	"NOME_ALUNO",
+	"DT_NASC_ALUNO"
+FROM "Aluno"]]>
+	</queryString>
+	<field name="RA_ALUNO" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="RA_ALUNO"/>
+		<property name="com.jaspersoft.studio.field.label" value="RA_ALUNO"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Aluno"/>
+	</field>
+	<field name="NOME_ALUNO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NOME_ALUNO"/>
+		<property name="com.jaspersoft.studio.field.label" value="NOME_ALUNO"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Aluno"/>
+	</field>
+	<field name="DT_NASC_ALUNO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="DT_NASC_ALUNO"/>
+		<property name="com.jaspersoft.studio.field.label" value="DT_NASC_ALUNO"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Aluno"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="31" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="550" height="30" uuid="c42b64fe-8a25-4bfd-b97a-2f62dbabe384"/>
+				<textElement textAlignment="Center">
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório de Alunos]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-1" y="28" width="550" height="1" uuid="d7f09e99-f2d4-40d5-81b3-7b4e5276ebd3"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="34" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="8" width="100" height="27" uuid="f306d315-975f-4932-a700-5eb1c172aaf0"/>
+				<textElement>
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RA ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="110" y="8" width="100" height="27" uuid="b4942a00-d142-401f-82c9-4327baad7909"/>
+				<textElement>
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="430" y="8" width="100" height="27" uuid="d0bcb0d4-ae55-4fd9-b472-46f406cf1806"/>
+				<textElement>
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dt Nasc.]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="34" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="10" width="100" height="20" uuid="6667d1b1-fe9e-4b2d-9a40-dafc5d151b24"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RA_ALUNO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="10" width="300" height="20" uuid="1ac7a2d7-f0a7-4d21-ac90-65b7261ee2ab"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOME_ALUNO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="430" y="10" width="120" height="20" uuid="b2511ca1-7ec8-4d4d-8add-19a669c235b4"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DT_NASC_ALUNO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="112" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="134" splitType="Stretch">
+			<textField>
+				<reportElement x="450" y="100" width="100" height="30" uuid="5270d307-6e02-4a6e-aa98-2150f6a54a5c"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="48" splitType="Stretch"/>
+	</summary>
+</jasperReport>
